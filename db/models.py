@@ -106,3 +106,17 @@ class Teacher(Base):
     def add_course(self,course_name):
         self.course_list_from_tea.append(course_name)
         self.save()
+
+    #老师获取课程下发学生方法
+    def get_student(self,course_name):
+        course_obj=Course.select(course_name)
+        return course_obj.student_list
+
+    #老师修改学生分数方法
+    def change_score(self,course_name,student_name,score):
+        #1、获取学生对象
+        student_obj=Student.select(student_name)
+        #2、在给学生对象中的课程修改分数
+        student_obj.score_dict[course_name]=score
+        student_obj.save()
+

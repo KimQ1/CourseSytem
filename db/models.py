@@ -62,8 +62,31 @@ class School(Base):
 
 
 class Student(Base):
-    pass
+    def __init__(self,user,pwd):
+        self.user = user
+        self.pwd = pwd
+        #每个学生只有一个小区
+        self.school=None
+        #有多门课程
+        self.course_list=[]
+        self.score_dict={}#{'course_name':0}
+        self.payed_dict={}#{'course_name':False}
 
+    #学生添加学校方法
+    def add_school(self,school_name):
+        self.school=school_name
+        self.save()
+    #学生添加课程方法
+    def add_course(self,course_name):
+        #1学生列表添加课程
+        self.course_list.append(course_name)
+        #2给学生选择的课程设置默认分数
+        self.score_dict[course_name]=0
+        self.save()
+        #3课程列表添加学生
+        course_obj=Course.select(course_name)
+        course_obj.student_list.append(self.user)
+        course_obj.save()
 
 class Course(Base):
     def __init__(self, course_name):
@@ -76,3 +99,10 @@ class Teacher(Base):
         self.user=teacher_name
         self.pwd=teacher_pwd
         self.course_list_from_tea=[]
+    #老师查看教授课程方法
+    def show_course(self):
+        return self.course_list_from_tea
+    #老师添加课程方法
+    def add_course(self,course_name):
+        self.course_list_from_tea.append(course_name)
+        self.save()

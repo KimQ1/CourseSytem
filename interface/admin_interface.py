@@ -18,17 +18,17 @@ def admin_register_interface(username, password):
     return True, '注册成功'
 
 
-def admin_login_interface(username, password):
-    # 判断用户是否存在
-    admin_obj = models.Admin.select(username)
-    # 如果不存在，则返回用户不存在返回给视图层
-    # 如果存在，则校验密码
-    if not admin_obj:
-        return False, '用户不存在!!!'
-    if password == admin_obj.pwd:
-        return True, '登录成功'
-    else:
-        return False, '密码错误'
+# def admin_login_interface(username, password):
+#     # 判断用户是否存在
+#     admin_obj = models.Admin.select(username)
+#     # 如果不存在，则返回用户不存在返回给视图层
+#     # 如果存在，则校验密码
+#     if not admin_obj:
+#         return False, '用户不存在!!!'
+#     if password == admin_obj.pwd:
+#         return True, '登录成功'
+#     else:
+#         return False, '密码错误'
 
 
 def create_school_interface(school_name, school_addr, admin_name):
